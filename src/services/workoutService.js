@@ -3,13 +3,19 @@ const { v4: uuid } = require("uuid");
 const Workout = require("../database/Workout");
 
 const getAllWorkouts = () => {
-  const allWorkouts = Workout.getAllWorkouts();
-  return allWorkouts;
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+       Workout.getAllWorkouts().then((workout) => resolve(workout));
+    }, 1000)
+  }) 
 };
 
 const getOneWorkout = (workoutId) => {
-  const workout = Workout.getOneWorkout(workoutId);
-  return workout;
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      Workout.getOneWorkout(workoutId).then((workout) => resolve(workout));
+    }, 1000)
+  })
 };
 
 const createNewWorkout = (newWorkout) => {
@@ -19,8 +25,13 @@ const createNewWorkout = (newWorkout) => {
     createdAt: new Date().toLocaleString("en-US", { timeZone: "UTC" }),
     updatedAt: new Date().toLocaleString("en-US", { timeZone: "UTC" }),
   };
-  const createdWorkout = Workout.createNewWorkout(workoutToInsert);
-  return createdWorkout;
+  console.log(workoutToInsert);
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      Workout.createNewWorkout(workoutToInsert).then((workout) => resolve(workout));
+      console.log("se fue a workouts")
+    }, 1000)
+  })
 };
 
 const updateOneWorkout = (workoutId, changes) => {

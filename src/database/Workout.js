@@ -3,42 +3,63 @@ const pool = require('./connection');
 
 const { saveToDatabase } = require("./utils");
 
-const getAllWorkouts = async () => {
-  let workout = "no";
+const getAllWorkouts = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // Set the query message
+      $query = "SELECT * from usuario"
 
-  // Set the query message
-  $query = "SELECT * from usuario"
-
-  // Execute the database query
-  pool.query($query, function (e, rows) {
-      if (e) {
+      // Execute the database query
+      pool.query($query, function (e, rows) {
+        if (e) {
           // Show the error message
           console.log("Error ocurred in executing the query.")
           return
-      }
-      response.send(rows);
-  })
-
-  return workout;
+        } 
+        resolve(rows)
+      })
+    }, 1500)
+  }) 
 };
 
 const getOneWorkout = (workoutId) => {
-  const workout = DB.workouts.find((workout) => workout.id === workoutId);
-  if (!workout) {
-    return;
-  }
-  return workout;
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // Set the query message
+      $query = "SELECT * from usuario where id = ?"
+
+      // Execute the database query
+      pool.query($query,workoutId, function (e, rows) {
+        if (e) {
+          // Show the error message
+          console.log("Error ocurred in executing the query.")
+          return
+        } 
+        resolve(rows)
+      })
+    }, 1500)
+  }) 
 };
 
 const createNewWorkout = (newWorkout) => {
-  const isAlreadyAdded =
-    DB.workouts.findIndex((workout) => workout.name === newWorkout.name) > -1;
-  if (isAlreadyAdded) {
-    return;
-  }
-  DB.workouts.push(newWorkout);
-  saveToDatabase(DB);
-  return newWorkout;
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // Set the query message
+      $query = "INSERT INTO `usuario` (`id`, `email`, `password`, `name`, `last_name`,`createdAt`,`updatedAt`) VALUES (?,?,?,?,?,?,?)"
+      console.log("comienzo de workouts");
+      // Execute the database query
+      pool.query($query,newWorkout.id,newWorkout.email,newWorkout.password,newWorkout.name,newWorkout.last_name,newWorkout.createdAt,newWorkout.updateAt
+        ,function (e, rows) {
+          if (e) {
+            // Show the error message
+            console.log("Error ocurred in executing the query.")
+            return
+          } 
+          console.log("se agrego");
+          resolve(rows)
+        })
+    }, 1500)
+  })
 };
 
 const updateOneWorkout = (workoutId, changes) => {

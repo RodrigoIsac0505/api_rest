@@ -1,41 +1,41 @@
 const workoutService = require("../services/workoutService");
 
 const getAllWorkouts = (req, res) => {
-  const allWorkouts = workoutService.getAllWorkouts();
-  res.send({ status: "OK", data: allWorkouts });
+  workoutService.getAllWorkouts()
+    .then((workout) => 
+      res.send({ status: "OK", data: workout }));
 };
 
 const getOneWorkout = (req, res) => {
-  const {
-    params: { workoutId },
-  } = req;
+  const { params: { workoutId }, } = req;
   if (!workoutId) {
     return;
   }
-  const workout = workoutService.getOneWorkout(workoutId);
-  res.send({ status: "OK", data: workout });
+  workoutService.getOneWorkout(workoutId)
+    .then((workout) => 
+      res.send({ status: "OK", data: workout }));
 };
 
 const createNewWorkout = (req, res) => {
   const { body } = req;
   if (
+    !body.email ||
+    !body.password ||
     !body.name ||
-    !body.mode ||
-    !body.equipment ||
-    !body.exercises ||
-    !body.trainerTips
+    !body.last_name
   ) {
     return;
   }
   const newWorkout = {
+    email: body.email,
+    password: body.password,
     name: body.name,
-    mode: body.mode,
-    equipment: body.equipment,
-    exercises: body.exercises,
-    trainerTips: body.trainerTips,
+    lastName: body.last_name
   };
-  const createdWorkout = workoutService.createNewWorkout(newWorkout);
-  res.status(201).send({ status: "OK", data: createdWorkout });
+  console.log(newWorkout);
+  workoutService.createNewWorkout(newWorkout)
+  .then((workout) => 
+    res.status(201).send({ status: "OK", data: workout }));
 };
 
 const updateOneWorkout = (req, res) => {
