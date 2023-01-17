@@ -1,25 +1,22 @@
 const DB = require("./db.json");
-const conn = require("./connection");
+const pool = require('./connection');
 
 const { saveToDatabase } = require("./utils");
 
-const getAllWorkouts = () => {
-  const connection = conn.dbConection();
-  const workout = [];
+const getAllWorkouts = async () => {
+  let workout = "no";
+
   // Set the query message
   $query = "SELECT * from usuario"
 
   // Execute the database query
-  connection.query($query, function (e, rows) {
+  pool.query($query, function (e, rows) {
       if (e) {
           // Show the error message
           console.log("Error ocurred in executing the query.")
           return
       }
-      for(let row of rows){
-        console.log(row["name"],"--datos--",row["last_name"]);
-      }
-      return rows.json();
+      response.send(rows);
   })
 
   return workout;
