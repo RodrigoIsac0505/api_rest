@@ -65,9 +65,8 @@ const updateOneWorkout = (req, res) => {
     if (!workoutId) {
       return;
     }
-    console.log(workoutId+"id<---->datos"+body);
     workoutService.updateOneWorkout(workoutId, body)
-      then((updatedWorkout) => 
+      .then((updatedWorkout) => 
         res.send({ status: "OK", data: updatedWorkout }));
 };
 
@@ -78,7 +77,6 @@ const deleteOneWorkout = (req, res) => {
   if (!workoutId) {
     return;
   }
-  console.log(workoutId);
   workoutService.deleteOneWorkout(workoutId);
   res.status(204).send({ status: "OK" });
 };

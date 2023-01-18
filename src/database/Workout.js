@@ -1,7 +1,4 @@
-const DB = require("./db.json");
 const pool = require('./connection');
-
-const { saveToDatabase } = require("./utils");
 
 const getAllWorkouts = () => {
   return new Promise((resolve, reject) => {
@@ -13,7 +10,7 @@ const getAllWorkouts = () => {
       pool.query($query, function (e, rows) {
         if (e) {
           // Show the error message
-          console.log("Error ocurred in executing the query.")
+          resolve("Error ocurred in executing the query.")
           return
         }
         resolve(rows)
@@ -32,7 +29,7 @@ const getOneWorkout = (workoutId) => {
       pool.query($query, workoutId, function (e, rows) {
         if (e) {
           // Show the error message
-          console.log("Error ocurred in executing the query.")
+          resolve("Error ocurred in executing the query.")
           return
         }
         resolve(rows)
@@ -48,7 +45,6 @@ const createNewWorkout = (newWorkout) => {
       //$query = "INSERT INTO usuario (id, email, password, name, last_name,createdAt,updatedAt) VALUES ?"
       // agregar una sola fila
       $query = "INSERT INTO usuario (id, email, password, name, last_name,createdAt,updatedAt) VALUES (?)"
-      console.log("comienzo de workouts");
       let datos = [
         newWorkout.id,
         newWorkout.email,
@@ -63,7 +59,7 @@ const createNewWorkout = (newWorkout) => {
         , function (e, result, fields) {
           if (e) {
             // Show the error message
-            console.log("Error ocurred in executing the query.")
+            resolve("Error ocurred in executing the query.")
             return
           }
           console.log("se agrego");
@@ -75,25 +71,24 @@ const createNewWorkout = (newWorkout) => {
 
 
 const updateOneWorkout = (workoutId, changes) => {
-
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      // agregar multiples filas se deja el signo de interrogacion sin parentesis
-      //$query = "INSERT INTO usuario (id, email, password, name, last_name,createdAt,updatedAt) VALUES ?"
-      // agregar una sola fila
-      console.log("ultimos: " + changes);
+      let datos = [
+        changes.email,
+        changes.password,
+        changes.name,
+        changes.last_name,
+        changes.updatedAt
+      ];
       //$query = " UPDATE usuario SET email=" + changes.email + ",password=" + changes.password + " , name= " + changes.name + ",last_name= " + changes.last_name + ", updatedAt= " + changes.updatedAt + " WHERE id=?"
-      $query = " UPDATE usuario SET email='dsd',password='dsdsd' , name='sdsdsd',last_name= 'sdsdsd', updatedAt='sdsds' WHERE id=?"
-      console.log("comienzo de workouts");
+      $query = " UPDATE usuario SET email='"+datos[0]+"',password='"+datos[1]+"' , name='"+datos[2]+"',last_name= '"+datos[3]+"', updatedAt='"+datos[4]+"' WHERE id=?"
       pool.query($query, workoutId
         , function (e, result, fields) {
           if (e) {
             // Show the error message
-            console.log("Error ocurred in executing the query.")
+            resolve("Error ocurred in executing the query.")
             return
           }
-          console.log("se actualizo");
-          console.log("Filas afectadas: " + result.affectedRows);
           resolve("Filas afectadas: " + result.affectedRows);
         })
     }, 1500)

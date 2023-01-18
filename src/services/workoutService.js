@@ -29,7 +29,6 @@ const createNewWorkout = (newWorkout) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       Workout.createNewWorkout(workoutToInsert).then((workout) => resolve(workout));
-      console.log("se fue a workouts")
     }, 1000)
   })
 };
@@ -41,7 +40,6 @@ const updateOneWorkout = (workoutId, changes) => {
   };
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log(workoutId+"id<---->datos"+workoutToUpdated);
       Workout.updateOneWorkout(workoutId, workoutToUpdated).then((workout) => resolve(workout));
     }, 1000)
   })
