@@ -3,13 +3,10 @@ const pool = require('./connection');
 const getAllWorkouts = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      // Set the query message
       $query = "SELECT * from usuario"
 
-      // Execute the database query
       pool.query($query, function (e, rows) {
         if (e) {
-          // Show the error message
           resolve("Error ocurred in executing the query.")
           return
         }
@@ -22,13 +19,10 @@ const getAllWorkouts = () => {
 const getOneWorkout = (workoutId) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      // Set the query message
       $query = "SELECT * from usuario where id = ?"
 
-      // Execute the database query
       pool.query($query, workoutId, function (e, rows) {
         if (e) {
-          // Show the error message
           resolve("Error ocurred in executing the query.")
           return
         }
@@ -58,7 +52,6 @@ const createNewWorkout = (newWorkout) => {
       pool.query($query, [datos]
         , function (e, result, fields) {
           if (e) {
-            // Show the error message
             resolve("Error ocurred in executing the query.")
             return
           }
@@ -80,12 +73,10 @@ const updateOneWorkout = (workoutId, changes) => {
         changes.last_name,
         changes.updatedAt
       ];
-      //$query = " UPDATE usuario SET email=" + changes.email + ",password=" + changes.password + " , name= " + changes.name + ",last_name= " + changes.last_name + ", updatedAt= " + changes.updatedAt + " WHERE id=?"
       $query = " UPDATE usuario SET email='"+datos[0]+"',password='"+datos[1]+"' , name='"+datos[2]+"',last_name= '"+datos[3]+"', updatedAt='"+datos[4]+"' WHERE id=?"
       pool.query($query, workoutId
         , function (e, result, fields) {
           if (e) {
-            // Show the error message
             resolve("Error ocurred in executing the query.")
             return
           }
@@ -102,7 +93,6 @@ const deleteOneWorkout = (workoutId) => {
   pool.query($query, workoutId
     , function (e, result, fields) {
       if (e) {
-        // Show the error message
         console.log("Error ocurred in executing the query.")
         return
       }

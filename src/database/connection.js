@@ -1,7 +1,6 @@
 // Import mysql module
 const mysql = require("mysql")
 // Setup database connection parameter
-
 const config = {
     host: "localhost",
     user: "root",

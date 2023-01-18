@@ -9,8 +9,6 @@ Thumbs.db
 .idea/
 .vscode/
 
-# vi
-*~
 
 # General
 log/

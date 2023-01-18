@@ -1,4 +1,5 @@
 // In src/services/workoutServices.js
+//libreria para crear id aleatorios
 const { v4: uuid } = require("uuid");
 const Workout = require("../database/Workout");
 
@@ -19,6 +20,7 @@ const getOneWorkout = (workoutId) => {
 };
 
 const createNewWorkout = (newWorkout) => {
+  //agregando la id aleatoria y las fechas
   const workoutToInsert = {
     ...newWorkout,
     id: uuid(),
