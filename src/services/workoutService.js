@@ -35,8 +35,16 @@ const createNewWorkout = (newWorkout) => {
 };
 
 const updateOneWorkout = (workoutId, changes) => {
-  const updatedWorkout = Workout.updateOneWorkout(workoutId, changes);
-  return updatedWorkout;
+  const workoutToUpdated = {
+    ...changes,
+    updatedAt: new Date().toLocaleString("en-US", { timeZone: "UTC" }),
+  };
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log(workoutId+"id<---->datos"+workoutToUpdated);
+      Workout.updateOneWorkout(workoutId, workoutToUpdated).then((workout) => resolve(workout));
+    }, 1000)
+  })
 };
 
 const deleteOneWorkout = (workoutId) => {

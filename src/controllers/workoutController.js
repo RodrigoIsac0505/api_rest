@@ -30,24 +30,45 @@ const createNewWorkout = (req, res) => {
     email: body.email,
     password: body.password,
     name: body.name,
-    lastName: body.last_name
+    last_name: body.last_name
   };
-  console.log(newWorkout);
+  console.log(body);
   workoutService.createNewWorkout(newWorkout)
   .then((workout) => 
     res.status(201).send({ status: "OK", data: workout }));
 };
 
 const updateOneWorkout = (req, res) => {
-  const {
-    body,
-    params: { workoutId },
-  } = req;
+  /*const { params: { workoutId }, } = req;
   if (!workoutId) {
     return;
   }
-  const updatedWorkout = workoutService.updateOneWorkout(workoutId, body);
-  res.send({ status: "OK", data: updatedWorkout });
+  const { body } = req;
+  if (
+    !body.email ||
+    !body.password ||
+    !body.name ||
+    !body.last_name
+  ) {
+    return;
+  }
+  const datosUpdated = {
+    email: body.email,
+    password: body.password,
+    name: body.name,
+    last_name: body.last_name
+  };*/
+    const {
+      body,
+      params: { workoutId },
+    } = req;
+    if (!workoutId) {
+      return;
+    }
+    console.log(workoutId+"id<---->datos"+body);
+    workoutService.updateOneWorkout(workoutId, body)
+      then((updatedWorkout) => 
+        res.send({ status: "OK", data: updatedWorkout }));
 };
 
 const deleteOneWorkout = (req, res) => {
@@ -57,6 +78,7 @@ const deleteOneWorkout = (req, res) => {
   if (!workoutId) {
     return;
   }
+  console.log(workoutId);
   workoutService.deleteOneWorkout(workoutId);
   res.status(204).send({ status: "OK" });
 };
